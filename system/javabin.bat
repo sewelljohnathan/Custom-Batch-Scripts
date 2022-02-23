@@ -1,7 +1,7 @@
-:: A complimentary script to javacbin that runs compiled java programs
+:: A script that compiles java files to a bin/ folder, then runs them
 
 @echo off
 if not exist ../bin/%1.class (
-    cmd /c "javacbin %1.java"
+    javac -d ../bin %1.java
 )
-cmd /k "java -cp ../bin %1"
+java -cp ../bin %*
