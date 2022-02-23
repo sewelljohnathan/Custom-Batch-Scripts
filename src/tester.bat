@@ -42,12 +42,8 @@ for %%f in (*) do (
         if exist !input_file! (
             if exist !output_file! (
 
-                set start_time=!time!
                 :: Run the program
                 java %1 < !input_file! > output.txt
-
-                set end_time=!time!
-                set /a total_time=
                 fc !output_file! output.txt
             )
         )
