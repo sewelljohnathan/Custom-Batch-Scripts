@@ -1,4 +1,4 @@
-:: A script that compiles java files to a bin/ folder, then runs them
+:: A script that compiles java files to a sibling folder bin/, then runs them
 
 @echo off
 if not exist %1.java (
