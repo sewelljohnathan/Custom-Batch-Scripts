@@ -27,7 +27,7 @@ fi
 SHOW_DIFF=false
 USE_BIN=false
 TIMEIT=false
-for arg in "$@"; do
+for arg in $@; do
     case $arg in
 
     -s | --show-diff)
