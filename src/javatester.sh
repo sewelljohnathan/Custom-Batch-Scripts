@@ -4,16 +4,19 @@
 # Get cli flags
 SHOW_DIFF=false
 USE_BIN=false
+bin_path=""
 for arg in "$@"; do
     case $arg in
 
     -s | --show-diff)
         SHOW_DIFF=true
+
         shift
         ;;
 
     -b | --bin)
         USE_BIN=true
+
         shift
         ;;
 
@@ -22,9 +25,9 @@ for arg in "$@"; do
         java_file="$1.java";
         if [[ -f $java_file ]]; then
 
-            # Determine if to compile to ..\bin
-            if [[ USE_BIN == true ]]; then
-                javac -d ..\\bin $java_file
+            # Determine if to compile to ../bin
+            if [[ $USE_BIN == true ]]; then
+                javac -d "../bin" $java_file
             else
                 javac $java_file
             fi
@@ -54,8 +57,8 @@ for file in *; do
         echo -n "${file::-3}: "
 
         # Run the java program
-        if [[ USE_BIN == true ]]; then
-            java -cp ..\\bin $1 < $file > output.txt
+        if [[ $USE_BIN == true ]]; then
+            java -cp "../bin" $1 < $file > output.txt
         else
             java $1 < $file > output.txt
         fi
