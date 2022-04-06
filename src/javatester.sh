@@ -1,10 +1,10 @@
 #!/bin/bash
 # Compiles and tests a java file against all .out files in the directory, using the available .in files.
 
+
 # Get cli flags
 SHOW_DIFF=false
 USE_BIN=false
-bin_path=""
 for arg in "$@"; do
     case $arg in
 
@@ -20,26 +20,53 @@ for arg in "$@"; do
         shift
         ;;
 
-    *)
-        # Compile the java file
-        java_file="$1.java";
-        if [[ -f $java_file ]]; then
+    -h | --help)
+        printf "Usage: $0 [OPTIONS] [filename]\n\n"
+        printf " Compiles and tests a java program using all available .in and cooresponding .out files.\n\n"
+        printf "Options:\n\n"
+        printf " %-20s" "-s, --show-diff"  
+        printf "Displays the difference, if any, between the .out file and program output.\n\n"
+        printf " %-20s" "-b, --bin"
+        printf "Compile java file to ../bin.\n\n"
+        printf " %-20s" "-h, --help"
+        printf "Show this message.\n\n"
 
-            # Determine if to compile to ../bin
-            if [[ $USE_BIN == true ]]; then
-                javac -d "../bin" $java_file
-            else
-                javac $java_file
-            fi
-
-        else
-            echo "Could not find file $java_file"
-            exit 1
-        fi
-
+        exit 0
         ;;
+
     esac
 done
+
+
+# Check if the argument is more than 5 characters and extract the filename
+java_file=$1;
+if [[ ${#java_file} -gt 5 ]]; then
+    java_name=${1::-5}
+else
+    echo "Not a valid file."
+    exit 1
+fi
+
+# Check if it is a .java file
+if [[ ${java_file: -5} != ".java" ]]; then
+    echo "Not a java file."
+    exit 1
+fi
+
+# Compile the java file
+if [[ -f $java_file ]]; then
+
+    # Determine if to compile to ../bin
+    if [[ $USE_BIN == true ]]; then
+        javac -d "../bin" $java_file
+    else
+        javac $java_file
+    fi
+
+else
+    echo "Could not find file $java_file"
+    exit 1
+fi
 
 
 # Loop through all the files
@@ -58,9 +85,9 @@ for file in *; do
 
         # Run the java program
         if [[ $USE_BIN == true ]]; then
-            java -cp "../bin" $1 < $file > output.txt
+            java -cp "../bin" $java_name < $file > output.txt
         else
-            java $1 < $file > output.txt
+            java $java_name < $file > output.txt
         fi
 
         # Find the difference
