@@ -56,9 +56,10 @@ fi
 
 # Check if compiled
 compiled=$?
-if [[ $compiled != 0 ]];
+if [[ $compiled != 0 ]]; then
     echo "Failed to compile."
     exit 1
+fi
 
 
 # Run 
