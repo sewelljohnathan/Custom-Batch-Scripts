@@ -4,7 +4,7 @@
 
 # Print the help screen
 function print_help {
-    printf "Usage: $0 [OPTIONS] [filename]\n\n"
+    printf "Usage: ${0##*/} [OPTIONS] [filename]\n\n"
     printf " Compiles and tests a java program using all available .in and cooresponding .out files.\n\n"
     printf "Options:\n\n"
     printf " %-20s" "-s, --show-diff"  
