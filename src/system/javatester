@@ -2,6 +2,27 @@
 # This is a script I made for automating the process of testing java programming assignments.
 
 
+# Print the help screen
+function print_help {
+    printf "Usage: $0 [OPTIONS] [filename]\n\n"
+    printf " Compiles and tests a java program using all available .in and cooresponding .out files.\n\n"
+    printf "Options:\n\n"
+    printf " %-20s" "-s, --show-diff"  
+    printf "Displays the difference, if any, between the .out file and program output.\n\n"
+    printf " %-20s" "-b, --bin"
+    printf "Compile java file to ../bin.\n\n"
+    printf " %-20s" "-t, --time"
+    printf "Time the program execution.\n\n"
+    printf " %-20s" "-h, --help"
+    printf "Show this message.\n\n"
+}
+
+# If no input is given, just print the help screen
+if [[ $# == 0 ]]; then
+    print_help
+    exit 0
+fi
+
 # Get cli flags
 SHOW_DIFF=false
 USE_BIN=false
@@ -27,17 +48,7 @@ for arg in "$@"; do
         ;;
 
     -h | --help)
-        printf "Usage: $0 [OPTIONS] [filename]\n\n"
-        printf " Compiles and tests a java program using all available .in and cooresponding .out files.\n\n"
-        printf "Options:\n\n"
-        printf " %-20s" "-s, --show-diff"  
-        printf "Displays the difference, if any, between the .out file and program output.\n\n"
-        printf " %-20s" "-b, --bin"
-        printf "Compile java file to ../bin.\n\n"
-        printf " %-20s" "-t, --time"
-        printf "Time the program execution.\n\n"
-        printf " %-20s" "-h, --help"
-        printf "Show this message.\n\n"
+        print_help
 
         exit 0
         ;;
