@@ -1,5 +1,5 @@
 #!/bin/bash
-# Compiles and tests a java file against all output files in the directory
+# Compiles and tests a java file against all .out files in the directory, using the available .in files.
 
 # Get cli flags
 SHOW_DIFF=false
