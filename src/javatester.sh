@@ -3,6 +3,7 @@
 
 # Get cli flags
 SHOW_DIFF=false
+USE_BIN=false
 for arg in "$@"; do
     case $arg in
 
@@ -11,11 +12,23 @@ for arg in "$@"; do
         shift
         ;;
 
+    -b | --bin)
+        USE_BIN=true
+        shift
+        ;;
+
     *)
         # Compile the java file
         java_file="$1.java";
         if [[ -f $java_file ]]; then
-            javac $java_file
+
+            # Determine if to compile to ..\bin
+            if [[ USE_BIN == true ]]; then
+                javac -d ..\\bin $java_file
+            else
+                javac $java_file
+            fi
+
         else
             echo "Could not find file $java_file"
             exit 1
@@ -38,10 +51,14 @@ for file in *; do
 
     # Make sure the output file exists
     if [[ -f $output_file ]]; then
+        echo -n "${file::-3}: "
 
         # Run the java program
-        echo -n "${file::-3}: "
-        java $1 < $file > output.txt
+        if [[ USE_BIN == true ]]; then
+            java -cp ..\\bin $1 < $file > output.txt
+        else
+            java $1 < $file > output.txt
+        fi
 
         # Find the difference
         if [[ $SHOW_DIFF == true ]]; then  
