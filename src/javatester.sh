@@ -1,5 +1,5 @@
 #!/bin/bash
-# Compiles and tests a java file against all .out files in the directory, using the available .in files.
+# This is a script I made for automating the process of testing java programming assignments.
 
 
 # Get cli flags
