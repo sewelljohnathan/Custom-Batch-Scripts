@@ -7,7 +7,7 @@ function print_help {
     printf "Usage: ${0##*/} [OPTIONS] [filename]\n\n"
     printf " Compiles and tests a java program using all available .in and cooresponding .out files.\n\n"
     printf "Options:\n\n"
-    printf " %-20s" "-s, --show-diff"  
+    printf " %-20s" "-d, --diff"  
     printf "Displays the difference, if any, between the .out file and program output.\n\n"
     printf " %-20s" "-b, --bin"
     printf "Compile java file to ../bin.\n\n"
@@ -30,7 +30,7 @@ TIMEIT=false
 for arg in $@; do
     case $arg in
 
-    -s | --show-diff)
+    -d | --diff)
         SHOW_DIFF=true
 
         shift
