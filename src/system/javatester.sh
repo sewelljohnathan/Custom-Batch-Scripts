@@ -56,20 +56,13 @@ for arg in $@; do
     esac
 done
 
-
-# Check if the argument is more than 5 characters and extract the filename
+# Get the filename and extension
 java_file=$1;
-if [[ ${#java_file} -gt 5 ]]; then
-    java_name=${1::-5}
-else
-    echo "Not a valid file."
-    exit 1
-fi
+extension=${java_file##*.}
 
-# Check if it is a .java file
-if [[ ${java_file: -5} != ".java" ]]; then
-    echo "Not a java file."
-    exit 1
+# Append the file extension if it is not added.
+if [[ $extension != "java" ]]; then
+    java_file="${java_file}.java"
 fi
 
 # Compile the java file
@@ -87,6 +80,8 @@ else
     exit 1
 fi
 
+# Now that we are sure java_file has the .java extension, extract the filename
+java_name=${java_file%%.*}
 
 # Loop through all the files
 for file in *; do
