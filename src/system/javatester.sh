@@ -7,12 +7,12 @@ function print_help {
     printf "Usage: ${0##*/} <OPTIONS> [filename]\n\n"
     printf " Compiles and tests a java program using all available .in and cooresponding .out files.\n\n"
     printf "Options:\n\n"
+    printf " %-20s" "-t, --time"
+    printf "Time the program execution.\n\n"
     printf " %-20s" "-d, --diff"  
     printf "Displays the difference, if any, between the .out file and program output.\n\n"
     printf " %-20s" "-b, --bin"
     printf "Compile java file to ../bin.\n\n"
-    printf " %-20s" "-t, --time"
-    printf "Time the program execution.\n\n"
     printf " %-20s" "-h, --help"
     printf "Show this message.\n\n"
 }
@@ -30,6 +30,11 @@ TIMEIT=false
 for arg in $@; do
     case $arg in
 
+    -t | --time)
+        TIMEIT=true
+        shift
+        ;;
+
     -d | --diff)
         SHOW_DIFF=true
 
@@ -39,11 +44,6 @@ for arg in $@; do
     -b | --bin)
         USE_BIN=true
 
-        shift
-        ;;
-
-    -t | --time)
-        TIMEIT=true
         shift
         ;;
 
