@@ -7,12 +7,22 @@ function print_help {
     printf "Usage: ${0##*/} <OPTIONS> [filename]\n\n"
     printf " Compiles and tests a java program using all available .in and cooresponding .out files.\n\n"
     printf "Options:\n\n"
+
     printf " %-20s" "-t, --time"
     printf "Time the program execution.\n\n"
+
     printf " %-20s" "-d, --diff"  
     printf "Displays the difference, if any, between the .out file and program output.\n\n"
+
+    printf " %-20s\n\n" "-fs SUFFIX, --filename-suffix SUFFIX"
+    printf " %-20s" ""
+    printf "Only use input/output file names that end with SUFFIX.\n"
+    printf " %-20s" ""
+    printf "Useful for when you intend to test multiple java files in the same directory.\n\n"
+
     printf " %-20s" "-b, --bin"
     printf "Compile java file to ../bin.\n\n"
+
     printf " %-20s" "-h, --help"
     printf "Show this message.\n\n"
 }
@@ -27,6 +37,7 @@ fi
 SHOW_DIFF=false
 USE_BIN=false
 TIMEIT=false
+SUFFIX=""
 for arg in $@; do
     case $arg in
 
@@ -38,6 +49,12 @@ for arg in $@; do
     -d | --diff)
         SHOW_DIFF=true
 
+        shift
+        ;;
+    
+    --fs | --filename-suffix)
+        shift
+        SUFFIX=$1
         shift
         ;;
 
@@ -83,19 +100,25 @@ fi
 # Now that we are sure java_file has the .java extension, extract the filename
 java_name=${java_file%%.*}
 
-# Loop through all the files
-for file in *; do
+# Match the list of files that end with the suffix and are .in files
+files=*${SUFFIX}.in
 
-    # Check if the file is a .in file
-    if [ ${file: -3} == .in ]; then
-        output_file=${file::-3}.out
-    else
-        continue
-    fi
+# Convert to an array to see if any files have been found
+file_array=($files)
+if [[ ${#file_array[@]} == 1 ]]; then
+    echo "Could not find any files ending in ${SUFFIX}.in"
+    exit 1
+fi
+
+# Loop through the files
+for file in $files; do
+
+    # Get the cooresponding .out file
+    output_file=${file%%.*}.out
 
     # Make sure the output file exists
     if [[ -f $output_file ]]; then
-        echo -n "${file::-3}: "
+        echo -n "${file::-((3 + ${#SUFFIX}))}: "
 
         # Get the start time
         if [[ $TIMEIT == true ]]; then
