@@ -14,7 +14,7 @@ for arg in "$@"; do
         ;;
 
     -h | --help)
-        printf "Usage: $0 [OPTIONS] [filename]\n\n"
+        printf "Usage: ${0##*/} [OPTIONS] [filename]\n\n"
         printf " Compiles and runs a java program.\n\n"
         printf "Options:\n\n"
         printf " %-20s" "-b, --bin"
