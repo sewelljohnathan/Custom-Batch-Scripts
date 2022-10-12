@@ -2,7 +2,7 @@
 
 @echo off
 
-:: Make sure that this is run in a venv
+:: Check if this is run in a venv
 if not defined VIRTUAL_ENV (
 
     @echo;
@@ -18,7 +18,7 @@ if not defined VIRTUAL_ENV (
 :: Save the contents of pip freeze into a file and then use it for pip uninstall
 pip freeze > requirements.txt.tmp
 pip uninstall -r requirements.txt.tmp -y
-del requirements.txt.tmp
+del requirements.tmp
 
 :: If a file is provided, use it to install new requirements
 if not "%1"=="" (
