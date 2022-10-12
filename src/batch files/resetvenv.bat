@@ -5,8 +5,14 @@
 :: Make sure that this is run in a venv
 if not defined VIRTUAL_ENV (
 
-    echo Will not run on a global environment
-    exit /b
+    @echo;
+    set /p response="Are you sure you want to run this in the global environment (Y/n)? "
+
+    if not %response%=="Y" (
+        echo Abort
+        exit /b
+    )
+
 )
 
 :: Save the contents of pip freeze into a file and then use it for pip uninstall
