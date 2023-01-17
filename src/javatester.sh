@@ -18,7 +18,7 @@ function print_help {
     printf " %-20s" ""
     printf "Only use input/output file names that end with SUFFIX.\n"
     printf " %-20s" ""
-    printf "Useful for when you intend to test multiple java files in the same directory.\n\n"
+    printf "Useful for when you do not want to test all files in the directory.\n\n"
 
     printf " %-20s" "-b, --bin"
     printf "Compile java file to ../bin.\n\n"
